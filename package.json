@@ -18,7 +18,8 @@
   },
   "homepage": "https://github.com/infiniteoo/homework_week_12_employee_tracker#readme",
   "dependencies": {
-    "express": "^4.17.1",
+    "console.table": "^0.10.0",
+    "inquirer": "^7.3.3",
     "mysql": "^2.18.1"
   }
 }
