@@ -6,61 +6,88 @@ const prompts = require('./prompts');
 
 
 
-/* connectToDB(); */
+const connection = connectToDB();
 clearConsole();
 console.log(art);
+mainMenu();
+
+function employeeView() {
+    let query = "SELECT * FROM employee";
+    connection.query(query, function (err, res) {
+        if (err) throw err;
+        {
+            console.table(res);
+        }
+        mainMenu();
+    })
+};
 
 
-inquirer
-    .prompt([prompts])
-    .then(response => {
+function mainMenu() {
+    inquirer
+        .prompt([prompts])
+        .then(response => {
 
-        switch(response.mainMenu) {
+            switch (response.mainMenu) {
 
-            case "View All Employees":
-                console.log("View All Employees");
-                break;
-            case "View All Employees by Department":
-                console.log("View All Employees by Department");
-                break;
-            case "View All Employees by Manager":
-                console.log("View All Employees by Manager");
-                break;
-            case "Add Employee":
-                console.log("Add Employee");
-                break;
-            case "Update Employee Role":
-                console.log("Update Employee Role");
-                break;
-            case "Remove Employee":
-                console.log("Remove Employee");
-                break;
-            case "Update Employee Manager":
-                console.log("Update Employee Manager");
-                break;
-            case "View All Roles":
-                console.log("View All Roles");
-                break;
-            case "Add Role":
-                console.log("Add Role");
-                break;
-            case "Remove Role":
-                console.log("Remove Role");
-                break;
-            case "View All Departments":
-                console.log("View All Departments");
-                break;
-            case "Quit":
-                console.log("Quit");
-                break;
+                case "View All Employees":
+                    console.log("View All Employees");
+                    employeeView();
+                    break;
+                case "View All Employees by Department":
+                    console.log("View All Employees by Department");
+                    break;
+                case "View All Employees by Manager":
+                    console.log("View All Employees by Manager");
+                    break;
+                case "Add Employee":
+                    console.log("Add Employee");
+                    break;
+                case "Update Employee Role":
+                    console.log("Update Employee Role");
+                    break;
+                case "Remove Employee":
+                    console.log("Remove Employee");
+                    break;
+                case "Update Employee Manager":
+                    console.log("Update Employee Manager");
+                    break;
+                case "View All Roles":
+                    console.log("View All Roles");
+                    break;
+                case "Add Role":
+                    console.log("Add Role");
+                    break;
+                case "Remove Role":
+                    console.log("Remove Role");
+                    break;
+                case "View All Departments":
+                    console.log("View All Departments");
+                    break;
+                case "Quit":
+                    console.log("Quit");
+                    break;
 
 
-            
 
-        };
-        
-    });
 
+            };
+
+        });
+
+}
+
+
+function employeeView() {
+    let query = "SELECT * FROM employee";
+    connection.query(query, function (err, res) {
+        if (err) throw err;
+        {
+            console.table(res);
+        }
+        mainMenu();
+    })
+};
 
 
 
@@ -81,7 +108,7 @@ function connectToDB() {
         console.log("connected!");
 
     });
-
+    return connection;
 
 };
 
