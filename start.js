@@ -32,7 +32,7 @@ function mainMenu() {
 
                 case "View All Employees":
                     console.log("View All Employees");
-                    employeeView();
+                    viewAllEmployees();
                     break;
                 case "View All Employees by Department":
                     console.log("View All Employees by Department");
@@ -78,13 +78,11 @@ function mainMenu() {
 }
 
 
-function employeeView() {
-    let query = "SELECT * FROM employee";
-    connection.query(query, function (err, res) {
+function viewAllEmployees() {
+
+    connection.query("SELECT * FROM employee", (err, res) => {
         if (err) throw err;
-        {
-            console.table(res);
-        }
+        console.table(res);
         mainMenu();
     })
 };
