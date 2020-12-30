@@ -2,13 +2,23 @@ const cTable = require('console.table');
 const mysql = require('mysql');
 const inquirer = require('inquirer');
 const art = require('./art.js');
+const prompts = require('./prompts');
 
 
 
-
-connectToDB();
+/* connectToDB(); */
 clearConsole();
 console.log(art);
+
+
+inquirer
+    .prompt([prompts])
+    .then(answers => {
+        // Use user feedback for... whatever!!
+        console.log(answers.list);
+    });
+
+
 
 
 function connectToDB() {
