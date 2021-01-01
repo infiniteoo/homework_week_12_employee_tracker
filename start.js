@@ -36,6 +36,7 @@ function mainMenu() {
                     break;
                 case "View All Employees by Department":
                     console.log("View All Employees by Department");
+                    viewAllEmployeesByDepartment();
                     break;
                 case "View All Employees by Manager":
                     console.log("View All Employees by Manager");
@@ -80,7 +81,30 @@ function mainMenu() {
 
 function viewAllEmployees() {
 
-    connection.query("SELECT * FROM employee INNER JOIN employee_role", (err, res) => {
+    connection.query(`
+        SELECT 
+        employee.first_name AS First, 
+        employee.last_name AS Last, 
+        role.title AS Title, 
+        role.salary AS Salary, 
+        department.name AS Department, 
+        CONCAT(e.first_name, ' ' ,e.last_name) AS Manager FROM employee 
+        INNER JOIN role on role.id = employee.role_id 
+        INNER JOIN department 
+        on department.id = role.department_id 
+        LEFT JOIN employee e 
+        on employee.manager_id = e.id
+        ORDER BY Last;
+        `, (err, res) => {
+            if (err) throw err;
+            console.table(res);
+            mainMenu();
+        })
+};
+
+function viewAllEmployeesByDepartment() {
+
+    connection.query("SELECT * FROM department ORDER BY employee.last_name", (err, res) => {
         if (err) throw err;
         console.table(res);
         mainMenu();

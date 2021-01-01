@@ -8,6 +8,12 @@ const art = `
 |     ||   |   ||  |  |     ||     ||     ||     ||     |    |   |   ||  |  ||  |  ||  |  ||     ||     ||  .  \\
 |_____||___|___||__|  |_____| \\___/ |____/ |_____||_____|    |___|___||__|__||__|__||__|__||___,_||_____||__|\\_|
                                                                                                               
+                                                                                 version 1.0b by Troy Dorman
+
+University of Minnesota Coding Bootcamp
+Part-Time Full-Stack Web Development
+
+
 
 
 

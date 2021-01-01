@@ -1,22 +1,23 @@
+DROP TABLE IF EXISTS employee, role, department;
+
 DROP DATABASE IF EXISTS company_db;
-DROP TABLE IF EXISTS employee, employee_role, employee_department;
 
 CREATE DATABASE company_db;
 
 USE company_db;
 
-CREATE TABLE employee_department (
+CREATE TABLE department (
 		    id INTEGER NOT NULL AUTO_INCREMENT,
-	 dept_name VARCHAR(30),
+	      name VARCHAR(30),
 			   PRIMARY KEY (id)
 );
 
-CREATE TABLE employee_role (
+CREATE TABLE role (
 			id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
 		 title VARCHAR(30) NOT NULL,
 		salary DECIMAL NOT NULL,
  department_id INTEGER, 
-			   FOREIGN KEY (department_id) REFERENCES employee_department (id) 
+			   FOREIGN KEY (department_id) REFERENCES department (id) 
 );
 
 CREATE TABLE employee (
@@ -26,16 +27,46 @@ CREATE TABLE employee (
        role_id INTEGER, 
 	manager_id INTEGER, 
 			   PRIMARY KEY (id),
-               FOREIGN KEY (role_id) REFERENCES employee_role(id),
+               FOREIGN KEY (role_id) REFERENCES role(id),
                FOREIGN KEY (manager_id) REFERENCES employee (id)          
 );
 
 
+SELECT 
+* 
+FROM 
+employee AS i
+INNER JOIN 
+role AS c
+ON
+i.role_id = c.id;
 
 
+SELECT employee.first_name, employee.last_name, role.title, role.salary, department.name 
+AS Manager
+FROM employee
+INNER JOIN role
+ON
+role.id = employee.role_id
+INNER JOIN department
+ON department.id = role.department_id
+LEFT JOIN employee e
+on employee.manager_id = e.id;
 
 
-
+SELECT 
+employee.first_name AS First, 
+employee.last_name AS Last, 
+role.title AS Title, 
+role.salary AS Salary, 
+department.name AS Department, 
+CONCAT(e.first_name, ' ' ,e.last_name) AS Manager FROM employee 
+INNER JOIN role on role.id = employee.role_id 
+INNER JOIN department 
+on department.id = role.department_id 
+LEFT JOIN employee e 
+on employee.manager_id = e.id
+ORDER BY Last;
 
 
 
