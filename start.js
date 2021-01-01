@@ -12,7 +12,7 @@ mainMenu();
 
 function mainMenu() {
     inquirer
-        .prompt([prompts])
+        .prompt([prompts.mainMenu])
         .then(response => {
 
             switch (response.mainMenu) {
@@ -140,6 +140,18 @@ function viewAllEmployeesByManager() {
     })
 };
 
+function viewAllDepartments() {
+
+    connection.query(`
+        SELECT 
+        department.name as 'Department Name'
+        FROM department;
+    `, (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        mainMenu();
+    })
+};
 
 
 
