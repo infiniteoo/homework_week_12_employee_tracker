@@ -1,27 +1,14 @@
-const cTable = require('console.table');
+
 const mysql = require('mysql');
 const inquirer = require('inquirer');
 const art = require('./art.js');
 const prompts = require('./prompts');
 
 
-
 const connection = connectToDB();
 clearConsole();
 console.log(art);
 mainMenu();
-
-function employeeView() {
-    let query = "SELECT * FROM employee";
-    connection.query(query, function (err, res) {
-        if (err) throw err;
-        {
-            console.table(res);
-        }
-        mainMenu();
-    })
-};
-
 
 function mainMenu() {
     inquirer
@@ -31,47 +18,52 @@ function mainMenu() {
             switch (response.mainMenu) {
 
                 case "View All Employees":
-                    console.log("View All Employees");
                     viewAllEmployees();
                     break;
+
                 case "View All Employees by Department":
-                    console.log("View All Employees by Department");
                     viewAllEmployeesByDepartment();
                     break;
+
                 case "View All Employees by Manager":
-                    console.log("View All Employees by Manager");
+                    viewAllEmployeesByManager();
                     break;
+
                 case "Add Employee":
-                    console.log("Add Employee");
+                    addEmployee();
                     break;
+
                 case "Update Employee Role":
-                    console.log("Update Employee Role");
+                    updateEmployeeRole();
                     break;
+
                 case "Remove Employee":
-                    console.log("Remove Employee");
+                    removeEmployee();
                     break;
+
                 case "Update Employee Manager":
-                    console.log("Update Employee Manager");
+                    updateEmployeeManager();
                     break;
+
                 case "View All Roles":
-                    console.log("View All Roles");
+                    viewAllRoles();
                     break;
+
                 case "Add Role":
-                    console.log("Add Role");
+                    addRole();
                     break;
+
                 case "Remove Role":
-                    console.log("Remove Role");
+                    removeRole();
                     break;
+
                 case "View All Departments":
-                    console.log("View All Departments");
+                    viewAllDepartments();
                     break;
+
                 case "Quit":
-                    console.log("Quit");
+                    connection.end();
                     break;
-
-
-
-
             };
 
         });
@@ -96,20 +88,60 @@ function viewAllEmployees() {
         on employee.manager_id = e.id
         ORDER BY Last;
         `, (err, res) => {
-            if (err) throw err;
-            console.table(res);
-            mainMenu();
-        })
-};
-
-function viewAllEmployeesByDepartment() {
-
-    connection.query("SELECT * FROM department ORDER BY employee.last_name", (err, res) => {
         if (err) throw err;
         console.table(res);
         mainMenu();
     })
 };
+
+function viewAllEmployeesByDepartment() {
+
+    connection.query(`
+        SELECT 
+        employee.first_name AS First, 
+        employee.last_name AS Last, 
+        role.title AS Title, 
+        role.salary AS Salary, 
+        department.name AS Department, 
+        CONCAT(e.first_name, ' ' ,e.last_name) AS Manager FROM employee 
+        INNER JOIN role on role.id = employee.role_id 
+        INNER JOIN department 
+        on department.id = role.department_id 
+        LEFT JOIN employee e 
+        on employee.manager_id = e.id
+        ORDER BY Department;
+    `, (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        mainMenu();
+    })
+};
+
+function viewAllEmployeesByManager() {
+
+    connection.query(`
+        SELECT 
+        employee.first_name AS First, 
+        employee.last_name AS Last, 
+        role.title AS Title, 
+        role.salary AS Salary, 
+        department.name AS Department, 
+        CONCAT(e.first_name, ' ' ,e.last_name) AS Manager FROM employee 
+        INNER JOIN role on role.id = employee.role_id 
+        INNER JOIN department 
+        on department.id = role.department_id 
+        LEFT JOIN employee e 
+        on employee.manager_id = e.id
+        ORDER BY Manager DESC;
+    `, (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        mainMenu();
+    })
+};
+
+
+
 
 
 
