@@ -6,28 +6,28 @@ CREATE DATABASE company_db;
 USE company_db;
 
 CREATE TABLE employee_department (
-		    id INTEGER AUTO_INCREMENT,
+		    id INTEGER NOT NULL AUTO_INCREMENT,
 	 dept_name VARCHAR(30),
 			   PRIMARY KEY (id)
 );
 
 CREATE TABLE employee_role (
-			id INTEGER AUTO_INCREMENT PRIMARY KEY,
-		 title VARCHAR(30),
-		salary DECIMAL,
+			id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		 title VARCHAR(30) NOT NULL,
+		salary DECIMAL NOT NULL,
  department_id INTEGER, 
 			   FOREIGN KEY (department_id) REFERENCES employee_department (id) 
 );
 
 CREATE TABLE employee (
-	        id INTEGER AUTO_INCREMENT,
-    first_name VARCHAR(30),
-     last_name VARCHAR(30),
+	        id INTEGER NOT NULL AUTO_INCREMENT,
+    first_name VARCHAR(30) NOT NULL,
+     last_name VARCHAR(30) NOT NULL,
        role_id INTEGER, 
-	manager_id INTEGER, -- NEED A FOREIGN KEY HERE REFERENCING TO ANOTHER EMPLOYEE THAT MANAGES THE EMPLOYEE BEING CREATED.  THIS FIELD MAY BE NULL IF EMPLOYEE HAS NO MNGR.
+	manager_id INTEGER, 
 			   PRIMARY KEY (id),
                FOREIGN KEY (role_id) REFERENCES employee_role(id),
-               FOREIGN KEY (manager_id) REFERENCES employee (id) -- this still may be incorrect but it's our best guess so far..            
+               FOREIGN KEY (manager_id) REFERENCES employee (id)          
 );
 
 

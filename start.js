@@ -80,7 +80,7 @@ function mainMenu() {
 
 function viewAllEmployees() {
 
-    connection.query("SELECT * FROM employee", (err, res) => {
+    connection.query("SELECT * FROM employee INNER JOIN employee_role", (err, res) => {
         if (err) throw err;
         console.table(res);
         mainMenu();
