@@ -157,7 +157,9 @@ function viewAllRoles() {
 
     connection.query(`
         SELECT 
-        role.title, role.salary, role.department_id        
+        role.title AS Title, 
+        role.salary AS Salary, 
+        role.department_id as 'Dept. ID'        
         FROM role;
     `, (err, res) => {
         if (err) throw err;
