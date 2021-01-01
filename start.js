@@ -153,6 +153,18 @@ function viewAllDepartments() {
     })
 };
 
+function viewAllRoles() {
+
+    connection.query(`
+        SELECT 
+        role.title, role.salary, role.department_id        
+        FROM role;
+    `, (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        mainMenu();
+    })
+};
 
 
 
