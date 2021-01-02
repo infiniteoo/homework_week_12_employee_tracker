@@ -33,21 +33,6 @@ CREATE TABLE employee (
 );
 
 
-SELECT 
-employee.first_name AS First, 
-employee.last_name AS Last, 
-role.title AS Title, 
-role.salary AS Salary, 
-department.name AS Department, 
-CONCAT(e.first_name, ' ' ,e.last_name) AS Manager FROM employee 
-INNER JOIN role on role.id = employee.role_id 
-INNER JOIN department 
-on department.id = role.department_id 
-LEFT JOIN employee e 
-on employee.manager_id = e.id
-ORDER BY Last;
-
-SELECT * FROM employee;
 
 
 
