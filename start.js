@@ -32,7 +32,7 @@ function mainMenu() {
                 case "Add Employee":
                     addEmployee();
                     break;
-
+                // done
                 case "Update Employee Role":
                     updateEmployeeRole();
                     break;
@@ -41,9 +41,6 @@ function mainMenu() {
                     removeEmployee();
                     break;
 
-                case "Update Employee Manager":
-                    updateEmployeeManager();
-                    break;
                 // done
                 case "View All Roles":
                     viewAllRoles();
@@ -87,7 +84,7 @@ function updateEmployeeRole() {
 
         if (err) throw err;
 
-        // then use that list of names as an inquirer prompt 
+        // extract first & last name from object keys into a string array
         let employeeNameArray = [];
 
         Object.keys(res).forEach(function (item) {
@@ -98,6 +95,7 @@ function updateEmployeeRole() {
             employeeNameArray.push(complete);
         });
 
+        // then use that list of names as an inquirer prompt 
         inquirer
             .prompt([{
                 name: "employeeToUpdate",
@@ -144,17 +142,7 @@ function updateEmployeeRole() {
                     console.log(`ERROR: ${error}`);
                 }
             });
-
-
-
-
-
     });
-
-
-
-
-
 };
 
 function removeRole() {
@@ -295,23 +283,6 @@ function addRole() {
         });
 }
 
-function genericQueryHolder() {
-    // use this as a template for our queries & delete when project is complete
-
-    connection.query(`
-    
-    
-    
-    `, (err, res) => {
-
-
-        if (err) throw err;
-        console.table(res);
-        mainMenu();
-
-    });
-}
-
 function removeEmployee() {
 
     // first we need to query the database and get a list of all the employees 
@@ -381,15 +352,8 @@ function removeEmployee() {
                     console.log(`ERROR: ${error}`);
                 }
             });
-
-
-
-
-
     });
-
 };
-
 
 
 function viewAllEmployees() {
@@ -488,9 +452,6 @@ function viewAllRoles() {
         mainMenu();
     })
 };
-
-
-
 
 function connectToDB() {
 

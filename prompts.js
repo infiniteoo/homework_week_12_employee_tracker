@@ -10,15 +10,12 @@ const prompts = {
             "Add Employee",
             "Update Employee Role",
             "Remove Employee",
-            "Update Employee Manager",
             "View All Roles",
             "Add Role",
             "Remove Role",
             "View All Departments",
             "Quit",
         ]
-
-
     },
 
     addRole: [
@@ -27,7 +24,6 @@ const prompts = {
             type: "input",
             message: "What is the role title?",
         },
-
         {
             name: "roleSalary",
             type: "input",
@@ -38,9 +34,8 @@ const prompts = {
             type: "input",
             message: "What is the employee's manager's id?",
         },
-
-
     ],
+
     addEmployee: [
         {
             name: "firstname",
@@ -61,7 +56,6 @@ const prompts = {
             name: "manager",
             type: "input",
             message: "New employee manager id?",
-
         }
     ]
 };
