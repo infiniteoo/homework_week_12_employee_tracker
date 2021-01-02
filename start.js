@@ -102,7 +102,22 @@ function removeRole() {
                 }])
                 .then(res => {
                     // query the database and delete the selected role
-                    console.log(res.roleSelected);
+                    connection.query(`
+
+                        DELETE FROM 
+                        role
+                        WHERE
+                        title = '${res.roleSelected}'
+
+                    `, (err) => {
+
+
+                        if (err) throw err;
+
+                        console.log("Role has been successfully deleted from the database.");
+                        mainMenu();
+
+                    });
 
                 })
                 .catch(error => {
@@ -114,7 +129,7 @@ function removeRole() {
                     }
                 });
 
-      
+
         })
 
 
