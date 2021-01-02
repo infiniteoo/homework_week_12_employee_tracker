@@ -28,30 +28,9 @@ CREATE TABLE employee (
 	manager_id INTEGER, 
 			   PRIMARY KEY (id),
                FOREIGN KEY (role_id) REFERENCES role(id),
-               FOREIGN KEY (manager_id) REFERENCES employee (id)          
+               FOREIGN KEY (manager_id) REFERENCES employee (id)   
+               ON DELETE CASCADE
 );
-
-
-SELECT 
-* 
-FROM 
-employee AS i
-INNER JOIN 
-role AS c
-ON
-i.role_id = c.id;
-
-
-SELECT employee.first_name, employee.last_name, role.title, role.salary, department.name 
-AS Manager
-FROM employee
-INNER JOIN role
-ON
-role.id = employee.role_id
-INNER JOIN department
-ON department.id = role.department_id
-LEFT JOIN employee e
-on employee.manager_id = e.id;
 
 
 SELECT 
@@ -67,6 +46,7 @@ on department.id = role.department_id
 LEFT JOIN employee e 
 on employee.manager_id = e.id
 ORDER BY Last;
+
 
 
 

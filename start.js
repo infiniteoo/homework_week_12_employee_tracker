@@ -131,9 +131,41 @@ function removeEmployee() {
 
             ])
             .then(answers => {
-                console.log("congrats you made it this far!  venture further.");
+                // make SQL query to remove this employee from the database
+                console.log(answers.nameToRemove);
+                let name = answers.nameToRemove.split(" ");
+                console.log(name)
+                
+                connection.query(`
 
-                mainMenu();
+                
+
+                DELETE FROM 
+                employee
+                WHERE
+                first_name = '${name[0]}'
+                AND
+                last_name = '${name[1]}'
+
+                
+    
+    
+    
+                `,
+
+                    (err, res) => {
+
+                        console.log("THAT PERSON HAS BEEN DELETED!  i think");
+                        if (err) throw err;
+                        console.table(res);
+                        mainMenu();
+
+                    });
+
+
+
+
+
 
             })
             .catch(error => {
