@@ -16,48 +16,47 @@ function mainMenu() {
         .then(response => {
 
             switch (response.mainMenu) {
-                // done
+
                 case "View All Employees":
                     viewAllEmployees();
                     break;
-                // done
+
                 case "View All Employees by Department":
                     viewAllEmployeesByDepartment();
                     break;
-                // done
+
                 case "View All Employees by Manager":
                     viewAllEmployeesByManager();
                     break;
-                // done
+
                 case "Add Employee":
                     addEmployee();
                     break;
-                // done
+
                 case "Update Employee Role":
                     updateEmployeeRole();
                     break;
-                // done
+
                 case "Remove Employee":
                     removeEmployee();
                     break;
 
-                // done
                 case "View All Roles":
                     viewAllRoles();
                     break;
-                // done
+
                 case "Add Role":
                     addRole();
                     break;
-                // done
+
                 case "Remove Role":
                     removeRole();
                     break;
-                // done
+
                 case "View All Departments":
                     viewAllDepartments();
                     break;
-                // done
+
                 case "Quit":
                     connection.end();
                     break;
@@ -225,15 +224,12 @@ function addEmployee() {
                     last_name: answers.lastname,
                     role_id: answers.role,
                     manager_id: answers.manager
-
-
                 }
                 , (err) => {
 
                     if (err) throw err;
                     console.log("Employee has been added.");
                     mainMenu();
-
                 });
         })
         .catch(error => {
@@ -244,8 +240,6 @@ function addEmployee() {
                 console.log(`There was an error.\nERROR: ${error}`);
             }
         });
-
-
 };
 
 function addRole() {
@@ -271,12 +265,10 @@ function addRole() {
                     mainMenu();
 
                 });
-
         })
         .catch(error => {
             if (error.isTtyError) {
-
-                console.log(`ERROR: Prompt couldn't be rendered in the current environment (${error})`);
+                console.log(`ERROR: Prompt couldn't be rendered in current environment (${error})`);
             } else {
                 console.log(`There was an error.\nERROR: ${error}`);
             }
@@ -285,7 +277,7 @@ function addRole() {
 
 function removeEmployee() {
 
-    // first we need to query the database and get a list of all the employees 
+    // query the database and get a list of all the employees 
 
     connection.query(`
 
@@ -297,10 +289,9 @@ function removeEmployee() {
 
     `, (err, res) => {
 
-
         if (err) throw err;
 
-        // then use that list of names as an inquirer prompt 
+        // use list of names as an inquirer prompt 
         let employeeNameArray = [];
 
         Object.keys(res).forEach(function (item) {
@@ -309,6 +300,7 @@ function removeEmployee() {
             const last = res[item].last_name;
             const complete = `${first} ${last}`;
             employeeNameArray.push(complete);
+
         });
 
         inquirer
@@ -317,9 +309,7 @@ function removeEmployee() {
                 message: "Employee to Remove:",
                 type: "list",
                 choices: employeeNameArray
-
             }
-
             ])
             .then(answers => {
 
@@ -355,8 +345,32 @@ function removeEmployee() {
     });
 };
 
+// i should have re-factored these three viewAll queries into one, since they're the exact
+// same minus the ORDER BY at the end.  ran out of time, but at least i recognize and know
+// how to fix it!
 
 function viewAllEmployees() {
+
+    /*
+    
+    credit to fellow student "cmelby" on this SQL query.
+    https://github.com/cmelby/EmployeeTracker/blob/master/app.js
+
+    i probably couldnt have completed this part of the assignment
+    without assistance.
+
+    i spent a good hour trying to accomplish this, and spent another 30 minutes
+    studying their code to ensure i understood exactly how this was achieved.
+
+    mostly on the manager linking part, that was the real challenge.
+
+    while i couldn't re-produced this query by memory, i am confident 
+    i completely understand what is happening here now.
+
+    i ended up re-factoring and customizing their query to make it look
+    unique.
+        
+    */
 
     connection.query(`
         SELECT 
@@ -462,7 +476,6 @@ function connectToDB() {
         port: 3306,
         database: "company_db"
     });
-
 
     connection.connect(err => {
 

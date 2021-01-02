@@ -47,7 +47,7 @@ LEFT JOIN employee e
 on employee.manager_id = e.id
 ORDER BY Last;
 
-
+SELECT * FROM employee;
 
 
 
