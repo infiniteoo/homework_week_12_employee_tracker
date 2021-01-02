@@ -75,7 +75,31 @@ function addRole() {
     inquirer
         .prompt(prompts.addRole)
         .then(answers => {
-            console.log(answers);
+            // INSERT INTO role database with this provided data
+            connection.query(`
+
+            INSERT INTO role
+            SET ?  
+    
+    
+            `,
+                {
+                    title: answers.roleTitle,
+                    salary: answers.roleSalary,
+                    department_id: answers.departmentId,
+
+
+
+                }
+                , (err, res) => {
+
+
+                    if (err) throw err;
+                    console.table(res);
+                    mainMenu();
+
+                });
+
         })
         .catch(error => {
             if (error.isTtyError) {
