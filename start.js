@@ -28,7 +28,7 @@ function mainMenu() {
                 case "View All Employees by Manager":
                     viewAllEmployeesByManager();
                     break;
-
+                // done
                 case "Add Employee":
                     addEmployee();
                     break;
@@ -69,6 +69,59 @@ function mainMenu() {
         });
 
 };
+
+function removeRole() {
+
+    // query database and retrieve list of roles
+    connection.query(`
+        SELECT 
+        role.title         
+        FROM 
+        role;
+        `,
+        (err, res) => {
+            if (err) throw err;
+
+            let roleNameArray = [];
+            Object.keys(res).forEach(function (item) {
+
+                const roleName = res[item].title;
+
+
+                roleNameArray.push(roleName);
+            });
+
+            // make inquirer prompt with roleNameArray
+
+            inquirer
+                .prompt([{
+                    name: "roleSelected",
+                    type: "list",
+                    message: "Select Role to DELETE from Database:",
+                    choices: roleNameArray
+                }])
+                .then(res => {
+                    // query the database and delete the selected role
+                    console.log(res.roleSelected);
+
+                })
+                .catch(error => {
+                    if (error.isTtyError) {
+
+                        console.log(`ERROR: Prompt couldn't be rendered in the current environment (${error})`);
+                    } else {
+                        console.log(`There was an error.\nERROR: ${error}`);
+                    }
+                });
+
+      
+        })
+
+
+
+};
+
+
 
 function addEmployee() {
 
