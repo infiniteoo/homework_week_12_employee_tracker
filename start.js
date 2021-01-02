@@ -131,48 +131,35 @@ function removeEmployee() {
 
             ])
             .then(answers => {
-                // make SQL query to remove this employee from the database
-                console.log(answers.nameToRemove);
-                let name = answers.nameToRemove.split(" ");
-                console.log(name)
-                
-                connection.query(`
 
-                
+                let fullNameSplit = answers.nameToRemove.split(" ");
+
+                // make SQL query to remove this employee from the database
+                connection.query(`
 
                 DELETE FROM 
                 employee
                 WHERE
-                first_name = '${name[0]}'
+                first_name = '${fullNameSplit[0]}'
                 AND
-                last_name = '${name[1]}'
-
-                
-    
-    
-    
+                last_name = '${fullNameSplit[1]}'
+               
                 `,
+                    (err) => {
 
-                    (err, res) => {
-
-                        console.log("THAT PERSON HAS BEEN DELETED!  i think");
+                        console.log("Employee Deleted\n");
                         if (err) throw err;
-                        console.table(res);
+                        
                         mainMenu();
 
                     });
-
-
-
-
-
-
             })
             .catch(error => {
                 if (error.isTtyError) {
                     // Prompt couldn't be rendered in the current environment
+                    console.log(`ERROR: Prompt couldn't be rendered in the current environment (${error})`);
                 } else {
-                    // Something else when wrong
+                    console.log(`ERROR: ${error}`);
                 }
             });
 
