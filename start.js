@@ -52,7 +52,7 @@ function mainMenu() {
                 case "Add Role":
                     addRole();
                     break;
-
+                // done
                 case "Remove Role":
                     removeRole();
                     break;
@@ -67,6 +67,93 @@ function mainMenu() {
             };
 
         });
+
+};
+
+function updateEmployeeRole() {
+
+    // first we need to query the database and get a list of all the employees 
+
+    connection.query(`
+
+    SELECT
+    employee.first_name,
+    employee.last_name
+    FROM 
+    employee
+
+    `, (err, res) => {
+
+
+        if (err) throw err;
+
+        // then use that list of names as an inquirer prompt 
+        let employeeNameArray = [];
+
+        Object.keys(res).forEach(function (item) {
+
+            const first = res[item].first_name;
+            const last = res[item].last_name;
+            const complete = `${first} ${last}`;
+            employeeNameArray.push(complete);
+        });
+
+        inquirer
+            .prompt([{
+                name: "employeeToUpdate",
+                message: "Employee to Update:",
+                type: "list",
+                choices: employeeNameArray
+
+            },
+            {
+                name: "newEmployeeRole",
+                message: "New employee role ID: ",
+                type: "input"
+            }
+            ])
+            .then(res => {
+
+                let fullNameSplit = res.employeeToUpdate.split(" ");
+
+                // make SQL query to remove this employee from the database
+                connection.query(`
+
+                UPDATE
+                employee
+                SET role_id = '${res.newEmployeeRole}'
+                WHERE
+                first_name = '${fullNameSplit[0]}'
+                AND
+                last_name = '${fullNameSplit[1]}'
+               
+                `,
+                    (err) => {
+
+                        console.log("Employee role updated.");
+                        if (err) throw err;
+                        mainMenu();
+
+                    });
+            })
+            .catch(error => {
+                if (error.isTtyError) {
+
+                    console.log(`ERROR: Prompt couldn't be rendered in the current environment (${error})`);
+                } else {
+                    console.log(`ERROR: ${error}`);
+                }
+            });
+
+
+
+
+
+    });
+
+
+
+
 
 };
 
@@ -86,9 +173,8 @@ function removeRole() {
             Object.keys(res).forEach(function (item) {
 
                 const roleName = res[item].title;
-
-
                 roleNameArray.push(roleName);
+
             });
 
             // make inquirer prompt with roleNameArray
@@ -124,16 +210,13 @@ function removeRole() {
                     if (error.isTtyError) {
 
                         console.log(`ERROR: Prompt couldn't be rendered in the current environment (${error})`);
+                        mainMenu();
                     } else {
                         console.log(`There was an error.\nERROR: ${error}`);
+                        mainMenu();
                     }
                 });
-
-
         })
-
-
-
 };
 
 
@@ -164,7 +247,6 @@ function addEmployee() {
                     mainMenu();
 
                 });
-
         })
         .catch(error => {
             if (error.isTtyError) {
@@ -211,10 +293,6 @@ function addRole() {
                 console.log(`There was an error.\nERROR: ${error}`);
             }
         });
-
-
-
-
 }
 
 function genericQueryHolder() {
