@@ -48,7 +48,7 @@ function mainMenu() {
                 case "View All Roles":
                     viewAllRoles();
                     break;
-
+                // done
                 case "Add Role":
                     addRole();
                     break;
@@ -68,7 +68,47 @@ function mainMenu() {
 
         });
 
-}
+};
+
+function addEmployee() {
+
+    inquirer
+        .prompt(prompts.addEmployee)
+        .then(answers => {
+            // INSERT INTO role database with this provided data
+            connection.query(`
+
+        INSERT INTO employee
+        SET ?  
+        `,
+                {
+                    first_name: answers.firstname,
+                    last_name: answers.lastname,
+                    role_id: answers.role,
+                    manager_id: answers.manager
+
+
+                }
+                , (err) => {
+
+                    if (err) throw err;
+                    console.log("Employee has been added.");
+                    mainMenu();
+
+                });
+
+        })
+        .catch(error => {
+            if (error.isTtyError) {
+
+                console.log(`ERROR: Prompt couldn't be rendered in the current environment (${error})`);
+            } else {
+                console.log(`There was an error.\nERROR: ${error}`);
+            }
+        });
+
+
+};
 
 function addRole() {
 
@@ -80,22 +120,16 @@ function addRole() {
 
             INSERT INTO role
             SET ?  
-    
-    
             `,
                 {
                     title: answers.roleTitle,
                     salary: answers.roleSalary,
                     department_id: answers.departmentId,
-
-
-
                 }
-                , (err, res) => {
-
+                , (err) => {
 
                     if (err) throw err;
-                    console.table(res);
+                    console.log("Role has been added.");
                     mainMenu();
 
                 });

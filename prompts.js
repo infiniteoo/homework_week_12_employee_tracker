@@ -40,11 +40,30 @@ const prompts = {
         },
 
 
+    ],
+    addEmployee: [
+        {
+            name: "firstname",
+            type: "input",
+            message: "New employee first name?"
+        },
+        {
+            name: "lastname",
+            type: "input",
+            message: "New employee last name?"
+        },
+        {
+            name: "role",
+            type: "input",
+            message: "New employee role id?",
+        },
+        {
+            name: "manager",
+            type: "input",
+            message: "New employee manager id?",
+
+        }
     ]
-
-
-
-
 };
 
 module.exports = prompts;
