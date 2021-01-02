@@ -15,7 +15,7 @@ These were the homework's posted minimum requrements:
 * View departments, roles, employees
 * Update employee roles
 
-with Bonus points attainable my beeting these criteria:
+with Bonus points attainable by meeting these criteria:
 
 * Update employee managers
 * View employees by manager
