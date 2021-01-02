@@ -19,7 +19,28 @@ const prompts = {
         ]
 
 
-    }
+    },
+
+    addRole: [
+        {
+            name: "roleTitle",
+            type: "input",
+            message: "What is the role title?",
+        },
+
+        {
+            name: "roleSalary",
+            type: "input",
+            message: "What is the role's salary?",
+        },
+        {
+            name: "departmentId",
+            type: "input",
+            message: "What is the employee's manager's id?",
+        },
+
+
+    ]
 
 
 

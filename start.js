@@ -36,7 +36,7 @@ function mainMenu() {
                 case "Update Employee Role":
                     updateEmployeeRole();
                     break;
-
+                // done
                 case "Remove Employee":
                     removeEmployee();
                     break;
@@ -70,9 +70,29 @@ function mainMenu() {
 
 }
 
+function addRole() {
+
+    inquirer
+        .prompt(prompts.addRole)
+        .then(answers => {
+            console.log(answers);
+        })
+        .catch(error => {
+            if (error.isTtyError) {
+
+                console.log(`ERROR: Prompt couldn't be rendered in the current environment (${error})`);
+            } else {
+                console.log(`There was an error.\nERROR: ${error}`);
+            }
+        });
+
+
+
+
+}
 
 function genericQueryHolder() {
-    // use this as a template for our queries
+    // use this as a template for our queries & delete when project is complete
 
     connection.query(`
     
@@ -93,13 +113,13 @@ function removeEmployee() {
     // first we need to query the database and get a list of all the employees 
 
     connection.query(`
+
     SELECT
     employee.first_name,
     employee.last_name
     FROM 
     employee
-     
-    
+
     `, (err, res) => {
 
 
@@ -115,10 +135,6 @@ function removeEmployee() {
             const complete = `${first} ${last}`;
             employeeNameArray.push(complete);
         });
-
-
-
-
 
         inquirer
             .prompt([{
@@ -147,16 +163,15 @@ function removeEmployee() {
                 `,
                     (err) => {
 
-                        console.log("Employee Deleted\n");
+                        console.log("Employee Deleted.");
                         if (err) throw err;
-                        
                         mainMenu();
 
                     });
             })
             .catch(error => {
                 if (error.isTtyError) {
-                    // Prompt couldn't be rendered in the current environment
+
                     console.log(`ERROR: Prompt couldn't be rendered in the current environment (${error})`);
                 } else {
                     console.log(`ERROR: ${error}`);
